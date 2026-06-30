@@ -1,16 +1,9 @@
 import { useState, useEffect } from "react";
 import './App.css'
 const API_KEY = import.meta.env.VITE_WEATHER_API_KEY;
+import Navbar from "./components/Navbar";
+import WeatherCard from "./components/WeatherCard";
 
-function SearchBar({city, setCity}){
-  return(
-    <input
-      placeholder="Enter City"
-      value={city}
-      onChange={(e)=> setCity(e.target.value)}
-    />
-  )
-}
 
 function App() {
   
@@ -32,7 +25,7 @@ function App() {
         console.log(errorData);
         throw new Error(errorData.message);
       }
-      console.log(response);
+
       const weatherData=await response.json();
       setCity("");
       setData(weatherData);
@@ -49,14 +42,8 @@ function App() {
 
   return (
     <>
-      <SearchBar city={city} setCity={setCity}/>
-      <button onClick={()=> fetchWeather(city)}>Search</button>
-      {loading && <p>Loading...</p>}
-      {data && <p>City={data.name}</p>}
-      {data && <p>Temperature={data.main.temp}</p>}
-      {data && <p>Humidity={data.main.humidity}</p>}
-      {data && <p>Wind Speed={data.wind.speed}</p>}
-      {data && <p>Description={data.weather[0].description}</p>}
+      <Navbar city={city} setCity={setCity} fetchWeather={fetchWeather}/>
+      <WeatherCard data={data} loading={loading}/>
     </>
   )
 }
