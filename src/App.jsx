@@ -25,7 +25,6 @@ function App() {
         console.log(errorData);
         throw new Error(errorData.message);
       }
-
       const weatherData=await response.json();
       setCity("");
       setData(weatherData);
